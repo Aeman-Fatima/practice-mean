@@ -1,0 +1,18 @@
+<mat-card>
+    <mat-card-title>
+        Login
+    </mat-card-title>
+    <form (submit)="onLogin(signup)" #signup="ngForm">
+        <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput ngModel name="email" required email>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input matInput ngModel name="password" type="password" required>
+        </mat-form-field>
+        <mat-card-actions>
+            <button type="submit" mat-raised-button color="primary">Login</button>
+        </mat-card-actions>
+    </form>
+</mat-card>

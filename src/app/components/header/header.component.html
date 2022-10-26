@@ -1,0 +1,28 @@
+<mat-toolbar>
+    <span>
+        <a routerLink="/">My app</a>
+    </span>
+    <span class="spacer"></span>
+    <ul *ngIf="isLoggedIn">
+        <li>
+            <a mat-button routerLink="/create" routerLinkActive="mat-primary">Create Post</a>
+        </li>
+    </ul>
+    <ul>
+        <li>
+            <a mat-button routerLink="/signup" routerLinkActive="mat-primary">Sign up</a>
+        </li>
+    </ul>
+    <ng-template #logout>
+        <ul>
+            <li>
+                <a mat-button routerLink="/login" routerLinkActive="mat-primary">Login</a>
+            </li>
+        </ul>
+    </ng-template>
+    <ul *ngIf="isLoggedIn else logout">
+        <li>
+            <a mat-button (click)="onLogout()">Logout</a>
+        </li>
+    </ul>
+</mat-toolbar>

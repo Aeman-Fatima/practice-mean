@@ -1,0 +1,21 @@
+<mat-card>
+    <mat-card-title>
+        Edit Post
+    </mat-card-title>
+    <form *ngIf="!!post else noPost" (submit)="onPostEdit(postForm)" #postForm="ngForm">
+        <mat-form-field>
+            <mat-label>Title</mat-label>
+            <input matInput [(ngModel)]="post.title" name="title" required>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Content</mat-label>
+            <textarea matInput rows="6" [(ngModel)]="post.content" name="content" ngModel required></textarea>
+        </mat-form-field>
+        <mat-card-actions>
+            <button type="submit" mat-raised-button color="primary">Edit</button>
+        </mat-card-actions>
+    </form>
+    <ng-template #noPost>
+        <p>Post does not exist</p>
+    </ng-template>
+</mat-card>

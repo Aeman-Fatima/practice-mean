@@ -1,0 +1,18 @@
+<mat-card>
+    <mat-card-title>
+        Create Post
+    </mat-card-title>
+    <form (submit)="onPostCreate(post)" #post="ngForm">
+        <mat-form-field>
+            <mat-label>Title</mat-label>
+            <input matInput ngModel name="title" required>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Content</mat-label>
+            <textarea matInput rows="6" name="content" ngModel required></textarea>
+        </mat-form-field>
+        <mat-card-actions>
+            <button type="submit" mat-raised-button color="primary">Create</button>
+        </mat-card-actions>
+    </form>
+</mat-card>
