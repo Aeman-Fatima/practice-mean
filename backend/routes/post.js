@@ -50,7 +50,7 @@ router.get('', async (req, res, next) => {
 
 router.delete('/delete/:id', verifyUser, async (req, res, next) => {
     try {
-        const postDelete = await Post.deleteOne({ _id: req.params.id, creater: req.user })
+        const postDelete = await Post.destroy({ where: { id: req.params.id, userId: req.user } })
         res.status(200).json({
             message: 'post deleted',
             response: postDelete
@@ -69,8 +69,7 @@ router.put('/:id', verifyUser, async (req, res, next) => {
             title: req.body.title,
             content: req.body.content
         }
-        const postEdit = await Post.updateOne({ _id: req.params.id, creater: req.user }, postEditData)
-        // const editedPost = await Post.findOne({_id: req.params.id})
+        const postEdit = await Post.update(postEditData, { where: { id: req.params.id, userId: req.user } })
         res.status(200).json({
             message: 'post updated',
             response: postEdit
@@ -86,7 +85,7 @@ router.put('/:id', verifyUser, async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
     try {
-        const postGetOne = await Post.findOne({ _id: req.params.id })
+        const postGetOne = await Post.findOne({ where: { id: req.params.id } })
         res.status(200).json({
             message: 'Post recieved',
             response: postGetOne

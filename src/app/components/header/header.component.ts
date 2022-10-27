@@ -16,9 +16,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    // this.isLoggedIn = this.userService.getIfLoggedIn()
+    this.isLoggedIn = this.userService.getIfLoggedIn()
     this.userSub = this.userService.getUserStatus().subscribe((loggedIn)=>{
       this.isLoggedIn = loggedIn
+      console.log("Yeah babyyy",loggedIn)
      })
   }
 

@@ -18,14 +18,6 @@ router.post('/signup', async (req, res, next) => {
 
     const hashedPass = await bcrypt.hash(req.body.password, 8)
 
-    // const user = new User({
-    //     name: req.body.name,
-    //     email: req.body.email,
-    //     password: hashedPass
-    // })
-
-    console.log(req.body, User, db.User)
-
     try {
         const userSave = await User.create({
             name: req.body.name,
@@ -38,7 +30,7 @@ router.post('/signup', async (req, res, next) => {
             response: userSave
         })
     } catch (_err) {
-        if (_err.errors.email)
+        if (_err.errors[0].type.includes('unique'))
             res.status(500).json({
                 message: "Already registered",
                 response: _err
@@ -57,7 +49,6 @@ router.post('/login', async (req, res, next) => {
 
     try {
         const user = await User.findOne({ where: { email: req.body.email } })
-        console.log("I AM HERE ARE YOU LOOKING FOR ME?", user)
         if (!!user) loggedInUser = user.dataValues
         else throw "error"
     } catch (_err) {
@@ -74,14 +65,14 @@ router.post('/login', async (req, res, next) => {
     }
 
     try {
-        console.log("I AM LOGGED IN USER", loggedInUser)
+        console.log("YOYO", loggedInUser)
         const token = jwt.sign({ email: loggedInUser.email, userId: loggedInUser.id }, 'aorj[c0r,j[0pajrc0par-3[', { expiresIn: '1h' })
 
         res.status(200).json({
             message: "Logged In",
             response: {
                 token: token,
-                userId: loggedInUser._id,
+                userId: loggedInUser.id,
                 expiresIn: 3600
             }
         })

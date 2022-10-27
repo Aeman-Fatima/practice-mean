@@ -18,8 +18,8 @@ export class PostService {
     this.http.post<{message: string, response: Post_Incomming}>('http://localhost:3000/post', data)
 
     .subscribe((res)=>{
-      const {title, content, _id, creater} = res.response
-      this.posts.push({title, content, _id, creater})
+      const {title, content, id, userId} = res.response
+      this.posts.push({title, content, id, userId})
       this.updatePosts.next([...this.posts])
     })
   }
@@ -32,8 +32,8 @@ export class PostService {
         return ({
           title: post.title, 
           content: post.content,
-          _id: post._id,
-          creater: post.creater
+          id: post.id,
+          userId: post.userId
           })
       })
     }
@@ -54,14 +54,14 @@ export class PostService {
     this.http.delete<{message: string, response: any[]}>(`http://localhost:3000/post/delete/${id}`)
     .subscribe((response)=>{
       this.posts = this.posts.filter(filteredPosts => 
-          filteredPosts._id!==id
+          filteredPosts.id!==id
       )
       this.updatePosts.next([...this.posts])
     })
   }
 
   updatePost(data:Post_Edit){
-    this.http.put<{message: string, response: Post_Incomming}>(`http://localhost:3000/post/${data._id}`, data)
+    this.http.put<{message: string, response: Post_Incomming}>(`http://localhost:3000/post/${data.id}`, data)
     .subscribe((response)=>{
       this.getPosts()
     })

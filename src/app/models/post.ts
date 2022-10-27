@@ -6,14 +6,14 @@ export interface Post_Create {
 }
 
 export interface Post_Edit{
-    _id: string,
+    id: string,
     title: string,
     content: string
 }
 
 export interface Post_Incomming {
-    _id: any
+    id: any
     title: string
     content: string
-    creater: string
+    userId: string
 }

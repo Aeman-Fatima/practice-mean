@@ -32,7 +32,7 @@ export class PostEditComponent implements OnInit, OnDestroy {
     if(form.invalid) return
 
     const data:Post_Edit = {
-      _id: this.postId,
+      id: this.postId,
       title: form.value.title,
       content: form.value.content,
     }

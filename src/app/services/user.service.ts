@@ -26,6 +26,7 @@ export class UserService {
       const requiredData = data.response
       if(!!requiredData.token){
         this.isLoggedIn = true
+        console.log(requiredData)
         this.userId = requiredData.userId
         this.UserStatus.next(true)
         const expiresIn = new Date(new Date().getTime() + requiredData.expiresIn*1000)
@@ -55,11 +56,13 @@ export class UserService {
 
   loggedInRefresh(){
     const userAuthData = this.getData()
+    console.log(userAuthData)
     if(!!userAuthData){
       const expiresIn = userAuthData.expiresIn.getTime() - new Date().getTime()
       if(expiresIn>0){
         this.setLogoutTime(expiresIn)
         this.isLoggedIn = true
+        this.userId = userAuthData.userId || ''
         this.UserStatus.next(true)
       }
     }
@@ -90,7 +93,6 @@ export class UserService {
   }
 
   private setLogoutTime(time:number){
-    console.log(time)
     this.timer = setTimeout(()=>{
       this.logout()
     }, time)
