@@ -19,7 +19,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.isLoggedIn = this.userService.getIfLoggedIn()
     this.userSub = this.userService.getUserStatus().subscribe((loggedIn)=>{
       this.isLoggedIn = loggedIn
-      console.log("Yeah babyyy",loggedIn)
      })
   }
 

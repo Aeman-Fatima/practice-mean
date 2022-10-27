@@ -28,7 +28,6 @@ export class PostListComponent implements OnInit, OnDestroy {
     })
     this.userId = this.userService.getUser() || ''
     this.isLoggedIn = this.userService.getIfLoggedIn()
-    console.log(this.isLoggedIn, this.userId)
 
     this.userSub = this.userService.getUserStatus().subscribe(loggedIn=>{
       this.isLoggedIn=loggedIn
