@@ -8,9 +8,6 @@
                 {{post.title}}
             </mat-expansion-panel-header>
             <p>{{post.content}}</p>
-            {{post.userId}}
-            {{userId}}
-            {{isLoggedIn}}
             <mat-action-row *ngIf="isLoggedIn && userId == post.userId">
                 <button mat-raised-button color="warn" (click)="onDeletePost(post.id)">Delete</button>
                 <button mat-raised-button color="primary" [routerLink]="['edit',post.id]">Edit</button>

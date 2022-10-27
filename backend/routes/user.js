@@ -1,5 +1,5 @@
 const express = require('express')
-
+require('dotenv').config()
 const db = require('../database/models')
 const User = db.User
 
@@ -46,6 +46,8 @@ router.post('/signup', async (req, res, next) => {
 router.post('/login', async (req, res, next) => {
 
     let loggedInUser
+    const secret = process.env.SECRET_KEY
+    console.log("YOOOOO", process.env.SECRET_KEY, secret)
 
     try {
         const user = await User.findOne({ where: { email: req.body.email } })
@@ -65,9 +67,7 @@ router.post('/login', async (req, res, next) => {
     }
 
     try {
-        console.log("YOYO", loggedInUser)
-        const token = jwt.sign({ email: loggedInUser.email, userId: loggedInUser.id }, 'aorj[c0r,j[0pajrc0par-3[', { expiresIn: '1h' })
-
+        const token = jwt.sign({ email: loggedInUser.email, userId: loggedInUser.id }, process.env.SECRET_KEY, { expiresIn: '1h' })
         res.status(200).json({
             message: "Logged In",
             response: {

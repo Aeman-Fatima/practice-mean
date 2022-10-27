@@ -1,5 +1,6 @@
 const http = require('http')
 const app = require('./backend/app')
+require('dotenv').config()
 
 // const db = require("./backend/database/models")
 
