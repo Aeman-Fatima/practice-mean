@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { User_Create, User_Incomming, User_Login } from '../models/user';
 
@@ -13,7 +14,7 @@ export class UserService {
   private userId!: string
   private UserStatus = new Subject<boolean>()
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   signUp(data:User_Create){
     this.http.post<{message: string, response: User_Incomming}>('http://localhost:3000/user/signup', data)
@@ -38,8 +39,10 @@ export class UserService {
 
   logout(){
     clearTimeout(this.timer)
+    this.isLoggedIn = false
     this.UserStatus.next(false)
     this.clearData()
+    this.router.navigate(['/'])
   }
 
   getIfLoggedIn(){
