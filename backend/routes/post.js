@@ -2,21 +2,21 @@ const express = require('express')
 const verifyUser = require('../midlewares/auth')
 
 // const { Router } = require('@angular/router')
-const Post = require('../models/post')
+// const Post = require('../database/models')
+const db = require('../database/models')
+const Post = db.Post
 
 const router = express.Router()
 
 
 router.post('', verifyUser, async (req, res, next) => {
-    console.log(req.user)
-    const post = new Post({
-        title: req.body.title,
-        content: req.body.content,
-        creater: req.user
-    })
 
-    try{
-        const postSave = await post.save()
+    try {
+        const postSave = await Post.create({
+            title: req.body.title,
+            content: req.body.content,
+            userId: req.user
+        })
 
         res.status(200).json({
             message: 'Post Created',
@@ -24,7 +24,7 @@ router.post('', verifyUser, async (req, res, next) => {
         })
     }
 
-    catch(_err){
+    catch (_err) {
         res.status(500).json({
             message: 'Cannot create post',
             response: _err
@@ -32,9 +32,9 @@ router.post('', verifyUser, async (req, res, next) => {
     }
 })
 
-router.get('', async(req,res,next)=>{
-    try{
-        const postGet = await Post.find()
+router.get('', async (req, res, next) => {
+    try {
+        const postGet = await Post.findAll()
         res.status(200).json({
             message: 'Posts recieved',
             response: postGet
@@ -48,14 +48,14 @@ router.get('', async(req,res,next)=>{
     }
 })
 
-router.delete('/delete/:id', verifyUser, async(req,res,next)=>{
-    try{
-        const postDelete = await Post.deleteOne({_id:req.params.id, creater: req.user})
+router.delete('/delete/:id', verifyUser, async (req, res, next) => {
+    try {
+        const postDelete = await Post.deleteOne({ _id: req.params.id, creater: req.user })
         res.status(200).json({
             message: 'post deleted',
             response: postDelete
         })
-    } catch(_err){
+    } catch (_err) {
         res.status(500).json({
             message: 'Can\'t delete post',
             response: _err
@@ -63,19 +63,19 @@ router.delete('/delete/:id', verifyUser, async(req,res,next)=>{
     }
 })
 
-router.put('/:id', verifyUser, async(req,res,next)=>{
-    try{
+router.put('/:id', verifyUser, async (req, res, next) => {
+    try {
         const postEditData = {
             title: req.body.title,
             content: req.body.content
         }
-        const postEdit = await Post.updateOne({_id: req.params.id, creater: req.user}, postEditData)
+        const postEdit = await Post.updateOne({ _id: req.params.id, creater: req.user }, postEditData)
         // const editedPost = await Post.findOne({_id: req.params.id})
         res.status(200).json({
             message: 'post updated',
             response: postEdit
         })
-    } catch(_err){
+    } catch (_err) {
         res.status(500).json({
             message: 'Can\'t update post',
             response: _err
@@ -84,14 +84,14 @@ router.put('/:id', verifyUser, async(req,res,next)=>{
     }
 })
 
-router.get('/:id', async(req, res, next)=>{
-    try{
-        const postGetOne = await Post.findOne({_id: req.params.id})
+router.get('/:id', async (req, res, next) => {
+    try {
+        const postGetOne = await Post.findOne({ _id: req.params.id })
         res.status(200).json({
             message: 'Post recieved',
             response: postGetOne
         })
-    } catch (_err){
+    } catch (_err) {
         res.status(500).json({
             message: 'Can\'t update',
             response: _err
@@ -100,15 +100,3 @@ router.get('/:id', async(req, res, next)=>{
 })
 
 module.exports = router
-
-
-
-
-// .then((result) => {
-//     res.status(200).json({
-//         message: 'Post created',
-//         response: result
-//     })
-// }).catch((_err)=>{
-    
-// })
