@@ -44,6 +44,13 @@ export class UserService {
     this.router.navigate(['/'])
   }
 
+  editPass(data: {newPass:string, oldPass:string}){
+    this.http.post<{message: string, response: any}>('http://localhost:3000/user/editPass', data)
+    .subscribe((res)=>{
+      console.log(res)
+    })
+  }
+
   getIfLoggedIn(){
     return this.isLoggedIn
   }

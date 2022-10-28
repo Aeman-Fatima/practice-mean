@@ -5,7 +5,7 @@ export interface User_Create {
 }
 
 export interface User_Incomming {
-    _id: string,
+    id: string,
     email: string
 }
 

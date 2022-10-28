@@ -1,0 +1,42 @@
+<mat-card>
+    <mat-card-title>
+        Edit Password
+    </mat-card-title>
+    <form [formGroup]="passwordForm" (submit)="onUserEdit()">
+        <mat-form-field>
+            <mat-label>Old Password</mat-label>
+            <input matInput class="form-control" formControlName="oldPass">
+
+            <mat-error>
+                Old password is required
+            </mat-error>
+
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>New Password</mat-label>
+            <input matInput formControlName="newPass">
+
+            <mat-error>
+                <p *ngIf="passwordForm.controls['newPass'].errors?.['required']">New password is required </p>
+            </mat-error>
+
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Confirm Password</mat-label>
+            <input matInput formControlName="confirmPass">
+            <mat-error>
+                <p *ngIf="passwordForm.controls['confirmPass'].errors?.['required']"> Confirm password is required </p>
+                <p *ngIf="passwordForm.controls['confirmPass'].errors?.['passwordNotMatch']">passwords do not match</p>
+            </mat-error>
+
+        </mat-form-field>
+
+        <mat-card-actions>
+            <button type="submit" mat-raised-button color="primary">Edit</button>
+        </mat-card-actions>
+    </form>
+    <ng-template #noPost>
+        <p>Post does not exist</p>
+    </ng-template>
+</mat-card>

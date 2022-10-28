@@ -76,8 +76,48 @@ const login = async (req, res, next) => {
     }
 }
 
+const editPass = async (req, res, next) => {
+    let loggedInUser
+    const secret = process.env.SECRET_KEY
+
+    try {
+        console.log(req.user)
+        const user = await User.findOne({ where: { id: req.user } })
+        if (!!user) loggedInUser = user.dataValues
+        else throw "error"
+    } catch (_err) {
+        return res.status(401).json({
+            message: "User doesn't exist"
+        })
+    }
+
+    try {
+        const authorized = await bcrypt.compare(req.body.oldPass, loggedInUser.password)
+        if (!authorized) throw "error"
+    } catch (_err) {
+        return res.status(401).json({
+            message: "Incorrect old password"
+        })
+    }
+
+    try {
+        const hashedPass = await bcrypt.hash(req.body.newPass, 8)
+        const updatePass = await User.update({ password: hashedPass }, { where: { id: req.user } })
+        res.status(200).json({
+            message: "Password updated",
+            response: updatePass
+        })
+    } catch (_err) {
+        return res.status(401).json({
+            message: "Cannot update password"
+        })
+    }
+
+}
+
 
 module.exports = {
     signup,
-    login
+    login,
+    editPass
 }
