@@ -40,7 +40,6 @@ const login = async (req, res, next) => {
 
     let loggedInUser
     const secret = process.env.SECRET_KEY
-    console.log("YOOOOO", process.env.SECRET_KEY, secret)
 
     try {
         const user = await User.findOne({ where: { email: req.body.email } })
