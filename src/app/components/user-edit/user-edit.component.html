@@ -27,7 +27,7 @@
             <input matInput formControlName="confirmPass">
             <mat-error>
                 <p *ngIf="passwordForm.controls['confirmPass'].errors?.['required']"> Confirm password is required </p>
-                <p *ngIf="passwordForm.controls['confirmPass'].errors?.['passwordNotMatch']">passwords do not match</p>
+                <p *ngIf="passwordForm.controls['confirmPass'].errors?.['misMatch']">passwords do not match</p>
             </mat-error>
 
         </mat-form-field>

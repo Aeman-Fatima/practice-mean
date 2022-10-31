@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, NgForm, Validators, ValidatorFn } from '@angular/forms';
 import { User_Incomming } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
+import { matchPass } from './match-pass.validator';
 
 @Component({
   selector: 'app-user-edit',
@@ -11,7 +12,7 @@ import { UserService } from 'src/app/services/user.service';
 export class UserEditComponent implements OnInit {
 
   user!: User_Incomming
-  passwordForm:any
+  passwordForm!: FormGroup
   
   constructor(private userService: UserService, private formBuilder: FormBuilder) { }
 
@@ -23,19 +24,10 @@ export class UserEditComponent implements OnInit {
       confirmPass: ['', [Validators.required]]
     },
     {
-    validator: this.matchValidator.bind(this)
-  })
+    validator: matchPass('newPass', 'confirmPass')
+    }
+  )
   }
-
-  matchValidator(formGroup:FormGroup) {
-    const password = formGroup.get('newPass')?.value;
-    const confirmPassword  = formGroup.get('confirmPass')?.value;
-    password == confirmPassword ?
-      formGroup.controls['confirmPass'].setErrors(null) 
-      :
-      formGroup.controls['confirmPass'].setErrors( { passwordNotMatch: true })   
-  }
-
 
   onUserEdit(){
     if(this.passwordForm.invalid) return
