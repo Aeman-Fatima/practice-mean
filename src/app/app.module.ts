@@ -10,12 +10,13 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 
 //mui 
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatButtonModule} from '@angular/material/button';
-import {MatFormFieldModule} from '@angular/material/form-field'
-import {MatInputModule} from '@angular/material/input'
-import {MatCardModule} from '@angular/material/card'
-import {MatExpansionModule} from '@angular/material/expansion';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatInputModule } from '@angular/material/input'
+import { MatCardModule } from '@angular/material/card'
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatDialogModule } from '@angular/material/dialog';
 
 //my components
 import { PostCreateComponent } from './components/post-create/post-create.component';
@@ -25,6 +26,8 @@ import { SignupComponent } from './components/signup/signup.component';
 import { LoginComponent } from './components/login/login.component'
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
+import { ForgetPassComponent } from './components/forget-pass/forget-pass.component';
+
 
 
 @NgModule({
@@ -36,7 +39,8 @@ import { UserEditComponent } from './components/user-edit/user-edit.component';
     PostEditComponent,
     SignupComponent,
     LoginComponent,
-    UserEditComponent
+    UserEditComponent,
+    ForgetPassComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,7 +56,8 @@ import { UserEditComponent } from './components/user-edit/user-edit.component';
     MatFormFieldModule,
     MatInputModule,
     MatCardModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatDialogModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

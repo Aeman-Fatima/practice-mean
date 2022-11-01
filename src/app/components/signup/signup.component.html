@@ -9,11 +9,11 @@
         </mat-form-field>
         <mat-form-field>
             <mat-label>Email</mat-label>
-            <input matInput ngModel name="email" required>
+            <input matInput ngModel name="email" required email>
         </mat-form-field>
         <mat-form-field>
             <mat-label>Password</mat-label>
-            <input matInput ngModel name="password" type="password" required>
+            <input matInput ngModel name="password" type="password" required minlength="6">
         </mat-form-field>
         <mat-card-actions>
             <button type="submit" mat-raised-button color="primary">Signup</button>

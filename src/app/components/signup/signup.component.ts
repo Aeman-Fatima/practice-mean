@@ -15,17 +15,19 @@ export class SignupComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onSignUp(form: NgForm){
-    if(form.invalid) return
+  onSignUp(form: NgForm) {
+    console.log(form)
+    form.form.controls['email'].setErrors({ "incorrectEmail": true })
+    if (form.invalid) return
 
-    const data:User_Create = {
+    const data: User_Create = {
       name: form.value.name,
-      email: form.value.email,
-      password: form.value.password
+      email: form.value.email.trim(),
+      password: form.value.password.trim()
     }
 
     this.userService.signUp(data)
-    
+
     form.resetForm()
   }
 

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ForgetPassComponent } from './components/forget-pass/forget-pass.component';
 import { HeaderComponent } from './components/header/header.component';
 import { LoginComponent } from './components/login/login.component';
 import { PostCreateComponent } from './components/post-create/post-create.component';
@@ -10,13 +11,14 @@ import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
-  {path: '', component: PostListComponent},
-  {path: 'create', component: PostCreateComponent, canActivate: [AuthGuard]},
-  {path: 'edit/:id', component: PostEditComponent, canActivate: [AuthGuard]},
+  { path: '', component: PostListComponent },
+  { path: 'create', component: PostCreateComponent, canActivate: [AuthGuard] },
+  { path: 'edit/:id', component: PostEditComponent, canActivate: [AuthGuard] },
 
-  {path: 'signup', component: SignupComponent},
-  {path: 'login', component: LoginComponent},
-  {path: 'edit-password', component: UserEditComponent, canActivate: [AuthGuard]},
+  { path: 'signup', component: SignupComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'edit-password', component: UserEditComponent, canActivate: [AuthGuard] },
+  { path: 'forget-password', component: ForgetPassComponent },
 
 
 ];

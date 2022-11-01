@@ -5,6 +5,9 @@ const User = db.User
 
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const passGenerator = require('generate-password')
+var nodemailer = require('nodemailer')
+
 
 
 const signup = async (req, res, next) => {
@@ -78,10 +81,8 @@ const login = async (req, res, next) => {
 
 const editPass = async (req, res, next) => {
     let loggedInUser
-    const secret = process.env.SECRET_KEY
 
     try {
-        console.log(req.user)
         const user = await User.findOne({ where: { id: req.user } })
         if (!!user) loggedInUser = user.dataValues
         else throw "error"
@@ -115,9 +116,70 @@ const editPass = async (req, res, next) => {
 
 }
 
+const forgetPass = async (req, res, next) => {
+
+    try {
+        const user = await User.findOne({ where: { email: req.body.email } })
+        if (!!user) loggedInUser = user.dataValues
+        else throw 'error'
+    } catch (_err) {
+        return res.status(401).json({
+            message: "Incorrect Email"
+        })
+    }
+
+    try {
+
+        const smtpTransport = nodemailer.createTransport({
+            service: "Gmail",
+            auth: {
+                user: process.env.EMAIL,
+                pass: process.env.EMAIL_PASSWORD
+            }
+        });
+
+
+        const newPass = passGenerator.generate({
+            length: 6,
+            numbers: true
+        })
+
+        const hashedPass = await bcrypt.hash(newPass, 8)
+
+        smtpTransport.sendMail({
+            from: process.env.EMAIL,
+            to: loggedInUser?.email,
+            subject: "Password Reset",
+            text: `new password: ${newPass}`
+        }, (error, response) => {
+            if (error) {
+                console.log(error);
+                return res.status(401).json({
+                    message: "Cannot update password"
+                })
+            } else {
+                console.log("mail sent")
+            }
+        });
+
+        const updatePass = await User.update({ password: hashedPass }, { where: { id: loggedInUser.id } })
+
+        res.status(200).json({
+            message: "Password updated",
+            response: updatePass
+        })
+    } catch (_err) {
+        console.log(_err)
+        return res.status(400).json({
+            message: "Cannot update password"
+        })
+    }
+}
+
 
 module.exports = {
     signup,
     login,
-    editPass
+    editPass,
+    forgetPass
 }

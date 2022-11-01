@@ -7,10 +7,20 @@
             <mat-label>Email</mat-label>
             <input matInput ngModel name="email" required email>
         </mat-form-field>
+        <mat-error>
+        </mat-error>
         <mat-form-field>
             <mat-label>Password</mat-label>
             <input matInput ngModel name="password" type="password" required>
         </mat-form-field>
+        <mat-error *ngIf="!!error">
+            {{error}}
+        </mat-error>
+
+        <mat-card-content routerLink="/forget-password">
+            Forgot password?
+        </mat-card-content>
+
         <mat-card-actions>
             <button type="submit" mat-raised-button color="primary">Login</button>
         </mat-card-actions>

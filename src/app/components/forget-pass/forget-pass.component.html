@@ -1,0 +1,24 @@
+<mat-card>
+    <mat-card-title>
+        Edit Password
+    </mat-card-title>
+    <mat-card-content>
+        A password will be sent to your mail.
+    </mat-card-content>
+    <form [formGroup]="emailForm" (submit)="onUserEdit()">
+
+        <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput class="form-control" formControlName="email">
+            <mat-error>
+                <p *ngIf="emailForm.controls['email'].errors?.['required']">Email is required</p>
+                <p *ngIf="emailForm.controls['email'].errors?.['email']">Incorrect email</p>
+                <p *ngIf="emailForm.controls['email'].errors?.['incorrectEmail']">Email doesn't exist</p>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-card-actions>
+            <button type="submit" mat-raised-button color="primary">Send</button>
+        </mat-card-actions>
+    </form>
+</mat-card>

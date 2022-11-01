@@ -5,38 +5,37 @@
     <form [formGroup]="passwordForm" (submit)="onUserEdit()">
         <mat-form-field>
             <mat-label>Old Password</mat-label>
-            <input matInput class="form-control" formControlName="oldPass">
+            <input matInput type="password" class="form-control" formControlName="oldPass">
 
             <mat-error>
-                Old password is required
+                <p *ngIf="passwordForm.controls['oldPass'].errors?.['required']">Old password is required</p>
+                <p *ngIf="passwordForm.controls['oldPass'].errors?.['incorrectOldPass']">Incorrect old password</p>
             </mat-error>
 
         </mat-form-field>
         <mat-form-field>
             <mat-label>New Password</mat-label>
-            <input matInput formControlName="newPass">
-
+            <input matInput type="password" formControlName="newPass">
             <mat-error>
                 <p *ngIf="passwordForm.controls['newPass'].errors?.['required']">New password is required </p>
+                <p *ngIf="passwordForm.controls['newPass'].errors?.['minlength']">Password should be atleast 6
+                    characters long</p>
             </mat-error>
 
         </mat-form-field>
 
         <mat-form-field>
             <mat-label>Confirm Password</mat-label>
-            <input matInput formControlName="confirmPass">
+            <input matInput type="password" formControlName="confirmPass">
             <mat-error>
                 <p *ngIf="passwordForm.controls['confirmPass'].errors?.['required']"> Confirm password is required </p>
-                <p *ngIf="passwordForm.controls['confirmPass'].errors?.['misMatch']">passwords do not match</p>
+                <p *ngIf="passwordForm.controls['confirmPass'].errors?.['misMatch']">Passwords do not match</p>
             </mat-error>
 
         </mat-form-field>
 
         <mat-card-actions>
-            <button type="submit" mat-raised-button color="primary">Edit</button>
+            <button type="submit" mat-raised-button color="primary">Save</button>
         </mat-card-actions>
     </form>
-    <ng-template #noPost>
-        <p>Post does not exist</p>
-    </ng-template>
 </mat-card>

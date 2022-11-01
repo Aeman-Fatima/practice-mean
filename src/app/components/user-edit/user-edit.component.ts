@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, NgForm, Validators, ValidatorFn } from '@angular/forms';
+import { Router } from '@angular/router';
 import { User_Incomming } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
 import { matchPass } from './match-pass.validator';
@@ -11,35 +12,42 @@ import { matchPass } from './match-pass.validator';
 })
 export class UserEditComponent implements OnInit {
 
-  user!: User_Incomming
   passwordForm!: FormGroup
-  
-  constructor(private userService: UserService, private formBuilder: FormBuilder) { }
+
+  constructor(private userService: UserService, private formBuilder: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
 
     this.passwordForm = this.formBuilder.group({
-      oldPass: ['', [Validators.required]],
-      newPass: ['', [Validators.required]],
-      confirmPass: ['', [Validators.required]]
+      oldPass: ['', Validators.required],
+      newPass: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPass: ['', Validators.required]
     },
-    {
-    validator: matchPass('newPass', 'confirmPass')
-    }
-  )
+      {
+        validator: matchPass('newPass', 'confirmPass')
+      }
+    )
   }
 
-  onUserEdit(){
-    if(this.passwordForm.invalid) return
+  onUserEdit() {
+
+    if (this.passwordForm.invalid) return
 
     const values = this.passwordForm.value
 
-    console.log(values)
     const data = {
-      newPass: values.newPass || '',
-      oldPass: values.oldPass || ''
+      newPass: values.newPass.trim() || '',
+      oldPass: values.oldPass.trim() || ''
     }
     this.userService.editPass(data)
+      .subscribe(
+        (res) => {
+          this.router.navigate(['/'])
+        },
+        (err) => {
+          if (err.error.message === "Incorrect old password")
+            this.passwordForm.controls['oldPass'].setErrors({ "incorrectOldPass": true })
+        })
   }
 
 
