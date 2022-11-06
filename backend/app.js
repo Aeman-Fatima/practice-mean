@@ -1,10 +1,10 @@
 const express = require('express')
 const cors = require('cors')
 const bodyParser = require("body-parser")
-const db = require('./database/models')
+const db = require('./src/database/models')
 
-const postRoutes = require('./routes/post')
-const userRoutes = require('./routes/user')
+const postRoutes = require('./src/routes/post')
+const userRoutes = require('./src/routes/user')
 
 
 

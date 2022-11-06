@@ -7,6 +7,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const passGenerator = require('generate-password')
 var nodemailer = require('nodemailer')
+const { deleteImage } = require('../midlewares/file-upload')
 
 
 
@@ -176,10 +177,81 @@ const forgetPass = async (req, res, next) => {
     }
 }
 
+const getImage = async (req, res, next) => {
+    let loggedInUser
+
+    try {
+        const user = await User.findOne({ where: { id: req.user } })
+        if (!!user) loggedInUser = user.dataValues
+        else throw "error"
+    } catch (_err) {
+        return res.status(401).json({
+            message: "User doesn't exist"
+        })
+    }
+    const image = loggedInUser.profile
+    res.status(200).json({
+        message: "Profile Image",
+        response: image
+    })
+}
+
+
+const uploadImage = async (req, res, next) => {
+    try {
+        console.log(req.user)
+        const userProfile = await User.update({ profile: req.file.location }, { where: { id: req.user } })
+        res.send({
+            message: "picture uploaded", response: {
+                image: req.file.location
+            }
+        });
+    }
+    catch (_err) {
+        console.log(_err)
+        res.status(500).json({
+            message: 'Can\'t Upload Image',
+            response: {
+                image: _err
+            }
+        })
+    }
+
+}
+
+const deleteImageDB = async (req, res, next) => {
+    try {
+        const deleteImageBucket = await deleteImage(String(req.user))
+    } catch (_err) {
+        res.status(500).json({
+            message: 'Can\'t delete image',
+            response: _err
+        })
+    }
+    try {
+        const deleteImageData = await User.update(
+            {
+                profile: null
+            },
+            { where: { id: req.user } })
+        res.status(200).json({
+            message: 'Image deleted',
+            response: deleteImageData
+        })
+    } catch (_err) {
+        res.status(500).json({
+            message: 'Can\'t delete image',
+            response: _err
+        })
+    }
+}
 
 module.exports = {
     signup,
     login,
     editPass,
-    forgetPass
+    forgetPass,
+    getImage,
+    uploadImage,
+    deleteImageDB
 }

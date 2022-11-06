@@ -27,6 +27,7 @@ import { LoginComponent } from './components/login/login.component'
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { ForgetPassComponent } from './components/forget-pass/forget-pass.component';
+import { ImageComponent } from './components/image/image.component';
 
 
 
@@ -41,6 +42,7 @@ import { ForgetPassComponent } from './components/forget-pass/forget-pass.compon
     LoginComponent,
     UserEditComponent,
     ForgetPassComponent,
+    ImageComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,20 @@
+<mat-card>
+
+    <input (change)="onImagePicked($event)" placeholder="Upload Image" type="file" name="image" />
+    <div style="height: 30px;"></div>
+    <button mat-raised-button (click)="onImageUpload()">Upload File</button>
+
+    <div *ngIf="loading">Uploading</div>
+    <div *ngIf="imageUrl">
+        Preview Image from AWS
+        <br />
+        <img width="200px" src="{{imageUrl}}" />
+    </div>
+
+    <div *ngIf="fileUrl">
+        link to file
+        <br />
+        <a href="{{fileUrl}}">{{fileUrl}}</a>
+    </div>
+
+</mat-card>

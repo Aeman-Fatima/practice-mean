@@ -1,0 +1,15 @@
+img {
+    border-radius: 20px;
+    width: 300px;
+    height: auto;
+    align-self: center;
+    text-align: center;
+    border: 2px solid black;
+}
+.center{
+    text-align: center;
+}
+
+.loadingImage{
+    height: 300px;
+}

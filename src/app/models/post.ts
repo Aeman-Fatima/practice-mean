@@ -5,7 +5,7 @@ export interface Post_Create {
     content: string
 }
 
-export interface Post_Edit{
+export interface Post_Edit {
     id: string,
     title: string,
     content: string
@@ -16,4 +16,8 @@ export interface Post_Incomming {
     title: string
     content: string
     userId: string
+}
+
+export interface Picture_Upload {
+    image: string
 }

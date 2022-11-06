@@ -1,6 +1,6 @@
 const { signup } = require('../controllers/user')
 const request = require('supertest')
-const app = require('../app')
+const app = require('../../app')
 
 const db = require('../database/models')
 const User = db.User

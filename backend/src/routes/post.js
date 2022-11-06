@@ -1,6 +1,7 @@
 const express = require('express')
 const { createPost, getAllPosts, deletePost, editPost, getPost } = require('../controllers/post')
 const verifyUser = require('../midlewares/auth')
+const upload = require('../midlewares/file-upload');
 
 const router = express.Router()
 
@@ -14,5 +15,6 @@ router.delete('/delete/:id', verifyUser, deletePost)
 router.put('/:id', verifyUser, editPost)
 
 router.get('/:id', getPost)
+
 
 module.exports = router

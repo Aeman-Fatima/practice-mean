@@ -9,6 +9,7 @@ import { PostListComponent } from './components/post-list/post-list.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { AuthGuard } from './guards/auth.guard';
+import { ImageComponent } from './components/image/image.component';
 
 const routes: Routes = [
   { path: '', component: PostListComponent },
@@ -19,7 +20,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'edit-password', component: UserEditComponent, canActivate: [AuthGuard] },
   { path: 'forget-password', component: ForgetPassComponent },
-
+  { path: 'image-upload', component: ImageComponent },
 
 ];
 

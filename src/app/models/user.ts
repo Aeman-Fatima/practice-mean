@@ -6,7 +6,8 @@ export interface User_Create {
 
 export interface User_Incomming {
     id: string,
-    email: string
+    email: string,
+    profile: string
 }
 
 export interface User_Login {

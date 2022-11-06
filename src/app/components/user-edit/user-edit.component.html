@@ -1,5 +1,30 @@
 <mat-card>
     <mat-card-title>
+        Profile Image
+    </mat-card-title>
+    <br />
+    <br />
+    <div div *ngIf="imageUrl">
+        <div *ngIf="imageUrl" class="center">
+            <img src="{{imageUrl}}">
+        </div>
+    </div>
+    <div class="loadingImage" *ngIf="loading">Loading</div>
+
+
+    <div>
+        <button type="button" mat-raised-button name="image" (click)="fileInput.click()" *ngIf="!imageUrl">Add</button>
+        <button type="button" mat-raised-button name="image" (click)="fileInput.click()" *ngIf="imageUrl">Edit</button>
+        <input hidden (change)="onImagePicked($event)" #fileInput type="file" accept="image/png, image/jpeg" id="file">
+        <button *ngIf="enableUpload" mat-raised-button (click)="onImageUpload()">Upload</button>
+    </div>
+    <div style="margin-top: 20px;">
+        <button mat-raised-button *ngIf="imageUrl" (click)="onImageDelete()">Delete</button>
+    </div>
+
+    <br />
+    <br />
+    <mat-card-title>
         Edit Password
     </mat-card-title>
     <form [formGroup]="passwordForm" (submit)="onUserEdit()">
@@ -35,7 +60,7 @@
         </mat-form-field>
 
         <mat-card-actions>
-            <button type="submit" mat-raised-button color="primary">Save</button>
+            <button [disabled]="loading" type="submit" mat-raised-button color="primary">Save</button>
         </mat-card-actions>
     </form>
 </mat-card>

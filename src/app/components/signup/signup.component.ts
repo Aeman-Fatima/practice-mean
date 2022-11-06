@@ -17,7 +17,6 @@ export class SignupComponent implements OnInit {
 
   onSignUp(form: NgForm) {
     console.log(form)
-    form.form.controls['email'].setErrors({ "incorrectEmail": true })
     if (form.invalid) return
 
     const data: User_Create = {
